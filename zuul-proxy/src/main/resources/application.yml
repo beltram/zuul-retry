@@ -3,3 +3,24 @@ spring:
     name: zuul
 server:
   port: 9081
+zuul:
+  retryable: true
+  ssl-hostname-validation-enabled: false
+  ignoredServices: '*'
+  routes:
+    user-service:
+      path: /user-service/**
+      sensitiveHeaders:
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 3000
+  ConnectTimeout: 1000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 3
+  OkToRetryOnAllOperations: true
+  retryableStatusCodes: 500, 503
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2

@@ -1,5 +1,7 @@
 package com.example.userservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -24,20 +26,25 @@ public class UserServiceApplication {
 
         private LocalDateTime failUntil = now();
 
-        @GetMapping
-        public Mono<String> get() {
+        private Logger logger = LoggerFactory.getLogger(UserRessource.class);
+
+        @GetMapping("/{id}")
+        public Mono<String> get(@PathVariable int id) {
+            logger.info("get request for id {}", id);
             return Mono.just("this one works")
                        .flatMap(this::failIfRequested);
         }
 
-        @PostMapping
-        public Mono<String> post() {
+        @PostMapping("/{id}")
+        public Mono<String> post(@PathVariable int id) {
+            logger.info("post request for id {}", id);
             return Mono.just("this one fails")
                        .flatMap(this::failIfRequested);
         }
 
-        @PutMapping
-        public Mono<String> put() {
+        @PutMapping("/{id}")
+        public Mono<String> put(@PathVariable int id) {
+            logger.info("put request for id {}", id);
             return Mono.just("this one fails")
                        .flatMap(this::failIfRequested);
         }

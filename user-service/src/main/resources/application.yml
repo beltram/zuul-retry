@@ -2,10 +2,12 @@ spring:
   application:
     name: user-service
 server:
-  port: ${random.int[9000,9999]}
+  port: 8082
 eureka:
   instance:
     hostname: localhost
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
   client:
     registerWithEureka: true
     fetchRegistry: true               
