@@ -6,6 +6,5 @@ dependencyManagement {
 }
 
 dependencies {
-    compile 'org.springframework.cloud:spring-cloud-starter-zuul:2.0.0.M2'
-    compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server:2.0.0.M2'
 }
