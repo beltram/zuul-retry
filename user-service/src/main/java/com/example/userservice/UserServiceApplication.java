@@ -23,20 +23,20 @@ public class UserServiceApplication {
         private LocalDateTime failUntil = now();
 
         @GetMapping
-        public Mono<User> get() {
-            return Mono.just(new User().setName("this one works"))
+        public Mono<String> get() {
+            return Mono.just("this one works")
                        .flatMap(this::failIfRequested);
         }
 
         @PostMapping
-        public Mono<User> post() {
-            return Mono.just(new User().setName("this one fails"))
+        public Mono<String> post() {
+            return Mono.just("this one fails")
                        .flatMap(this::failIfRequested);
         }
 
         @PutMapping
-        public Mono<User> put() {
-            return Mono.just(new User().setName("this one fails"))
+        public Mono<String> put() {
+            return Mono.just("this one fails")
                        .flatMap(this::failIfRequested);
         }
 
@@ -46,7 +46,7 @@ public class UserServiceApplication {
             return Mono.just(failUntil);
         }
 
-        private Mono<User> failIfRequested(User t) {
+        private Mono<String> failIfRequested(String t) {
             return (Boolean) now().isBefore(failUntil) ?
                     Mono.error(new IllegalStateException("Fails on purpose")) :
                     Mono.just(t);
