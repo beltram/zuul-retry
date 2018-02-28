@@ -1,2 +1,4 @@
 rootProject.name = 'zuul-retry'
 
+include 'user-service'
+include 'zuul-proxy'
