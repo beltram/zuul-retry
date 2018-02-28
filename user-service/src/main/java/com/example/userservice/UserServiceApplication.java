@@ -50,7 +50,8 @@ public class UserServiceApplication {
         }
 
         @GetMapping("/fail/{duration}")
-        public Mono<LocalDateTime> fail(@PathVariable Integer duration) {
+        public Mono<LocalDateTime> fail(@PathVariable int duration) {
+            logger.info("Failure request received for duration {}", duration);
             failUntil = now().plusSeconds(duration);
             return Mono.just(failUntil);
         }
