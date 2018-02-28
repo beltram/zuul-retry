@@ -2,6 +2,7 @@ package com.example.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class UserServiceApplication {
 
     public static void main(String[] args) {
