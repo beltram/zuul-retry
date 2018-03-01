@@ -1,5 +1,31 @@
 spring:
   application:
-    name: zuul-latest
+    name: zuul_latest
 server:
   port: 9082
+zuul:
+  retryable: true
+  ribbonIsolationStrategy: THREAD
+  ssl-hostname-validation-enabled: false
+  ignoredServices: '*'
+  routes:
+    user-service:
+      path: /user-service/**
+      sensitiveHeaders:
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 2000
+  ConnectTimeout: 2000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  OkToRetryOnAllOperations: true
+  retryableStatusCodes: 500
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 10000
