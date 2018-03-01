@@ -17,7 +17,7 @@ ribbon:
     enabled: true
   ReadTimeout: 2000
   ConnectTimeout: 2000
-  MaxAutoRetries: 1
+  MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 1
   OkToRetryOnAllOperations: true
   retryableStatusCodes: 500
