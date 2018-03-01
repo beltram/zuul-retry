@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: zuul-latest
+server:
+  port: 9082

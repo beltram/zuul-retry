@@ -26,19 +26,24 @@ public class RetryTest {
     private Logger logger = LoggerFactory.getLogger(RetryTest.class);
 
     @Test
-    public void getFor1min_shouldRetryIfInstanceFails() {
-        sendMany(1, 20, 10, this::sendGetRequest);
+    public void get_shouldRetryIfInstanceFails() {
+        sendMany(1, 20, 10, this::get);
     }
 
     @Test
-    public void postFor1min_shouldRetryIfInstanceFails() {
-        sendMany(2, 30, 10, this::sendPostRequest);
+    public void post_shouldRetryIfInstanceFails() {
+        sendMany(1, 60, 10, this::post);
+    }
+
+    @Test
+    public void postNoBody_shouldRetryIfInstanceFails() {
+        sendMany(1, 60, 10, this::postNoBody);
     }
 
     private void sendMany(long intervalSeconds, int duration, int failureDuring, Function<Long, String> sendFunc) {
         long requestNb = duration / intervalSeconds;
         Flux<String> sample = Flux.interval(ofSeconds(intervalSeconds))
-                                  .doOnNext(i -> forceFailureWhen(i, duration/2, failureDuring))
+                                  .doOnNext(i -> forceFailureWhen(i, duration / 2, failureDuring))
                                   .takeWhile(i -> i < requestNb)
                                   .map(sendFunc);
         StepVerifier.create(sample)
@@ -54,14 +59,19 @@ public class RetryTest {
         }
     }
 
-    private String sendGetRequest(Long i) {
+    private String get(Long i) {
         logger.info("sending get request number {}", i);
         return template.getForObject(URL + i, String.class);
     }
 
-    private String sendPostRequest(Long i) {
+    private String post(Long i) {
         logger.info("sending post request number {}", i);
         return template.postForEntity(URL + i, null, String.class).getBody();
+    }
+
+    private String postNoBody(Long i) {
+        logger.info("sending post request number {}", i);
+        return template.postForEntity(URL + i, "" + i, String.class).getBody();
     }
 
     private void forceFailure(int duration) {

@@ -5,6 +5,7 @@ server:
   port: 9081
 zuul:
   retryable: true
+  ribbonIsolationStrategy: THREAD
   ssl-hostname-validation-enabled: false
   ignoredServices: '*'
   routes:
@@ -14,13 +15,17 @@ zuul:
 ribbon:
   eureka:
     enabled: true
-  ReadTimeout: 3000
-  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  ConnectTimeout: 2000
   MaxAutoRetries: 1
-  MaxAutoRetriesNextServer: 3
+  MaxAutoRetriesNextServer: 1
   OkToRetryOnAllOperations: true
-  retryableStatusCodes: 500, 503
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
+  retryableStatusCodes: 500
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 10000

@@ -2,4 +2,5 @@ rootProject.name = 'zuul-retry'
 
 include 'user-service'
 include 'zuul-proxy'
+include 'zuul-proxy-latest'
 include 'eureka'

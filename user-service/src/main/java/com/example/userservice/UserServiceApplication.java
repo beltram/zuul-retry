@@ -29,23 +29,37 @@ public class UserServiceApplication {
         private Logger logger = LoggerFactory.getLogger(UserRessource.class);
 
         @GetMapping("/{id}")
-        public Mono<String> get(@PathVariable int id) {
+        public Mono<String> get(@PathVariable String id) {
             logger.info("get request for id {}", id);
-            return Mono.just("this one works")
+            return Mono.just("works for " + id)
+                       .flatMap(this::failIfRequested);
+        }
+
+        @PostMapping("/nobody/{id}")
+        public Mono<String> postNoBody(@PathVariable String id) {
+            logger.info("post without body request for id {}", id);
+            return Mono.just("works without body for " + id)
                        .flatMap(this::failIfRequested);
         }
 
         @PostMapping("/{id}")
-        public Mono<String> post(@PathVariable int id) {
+        public Mono<String> post(@PathVariable String id, @RequestBody String body) {
             logger.info("post request for id {}", id);
-            return Mono.just("this one fails")
+            return Mono.just("works for " + body)
                        .flatMap(this::failIfRequested);
         }
 
         @PutMapping("/{id}")
-        public Mono<String> put(@PathVariable int id) {
+        public Mono<String> put(@PathVariable String id, @RequestBody String body) {
             logger.info("put request for id {}", id);
-            return Mono.just("this one fails")
+            return Mono.just("works for " + body)
+                       .flatMap(this::failIfRequested);
+        }
+
+        @PutMapping("/nobody/{id}")
+        public Mono<String> putNoBody(@PathVariable String id) {
+            logger.info("put without body request for id {}", id);
+            return Mono.just("works for " + id)
                        .flatMap(this::failIfRequested);
         }
 
